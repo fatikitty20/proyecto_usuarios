@@ -1,0 +1,190 @@
+/* ===========================
+   Variables globales
+=========================== */
+html {
+  --gap: 0.75rem;
+  --font-base: "Poppins", sans-serif;
+  --color-bg: #0f0f1a;
+  --color-fg: #f5f5f5;
+  --color-accent: #6c63ff;
+  --color-accent-hover: #9a94ff;
+  color-scheme: dark light;
+  background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+  color: var(--color-fg);
+  font-family: var(--font-base);
+
+}
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+  color: var(--color-fg);
+  font-family: var(--font-base);
+}
+
+
+/* ===========================
+   Tipografía básica
+=========================== */
+h1, h2 {
+  font-family: var(--font-base);
+  line-height: 1.2;
+  margin-block: 1rem;
+  text-align: center;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+main {
+  max-width: 90ch;
+  margin-inline: auto;
+  padding: 2rem;
+}
+
+footer {
+  text-align: center;
+  padding: var(--gap);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* ===========================
+   Navegación móvil
+=========================== */
+@media screen and (max-width: 599px) {
+  #hamburguesa {
+    anchor-name: --hamburguesa;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+  }
+
+  #hamburguesa:hover {
+    transform: scale(1.2) rotate(10deg);
+  }
+
+  #navegacionDelSitio {
+    position: absolute;
+    position-anchor: --hamburguesa;
+    top: anchor(bottom);
+    left: anchor(left);
+    margin: 0;
+    transform: translateY(-20%) scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    opacity: 0;
+  }
+
+  #navegacionDelSitio:popover-open {
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+  }
+
+  #navegacionDelSitio a {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: var(--color-fg);
+    transition: color 0.3s ease;
+  }
+
+  #navegacionDelSitio a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  #navegacionAncha {
+    display: none;
+  }
+}
+
+/* ===========================
+   Navegación escritorio
+=========================== */
+@media screen and (min-width: 600px) {
+  #navegacionDelSitio,
+  #hamburguesa {
+    display: none;
+  }
+
+  #navegacionAncha {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  #navegacionAncha ul {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: var(--gap);
+    justify-content: center;
+  }
+
+  #navegacionAncha a {
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+    color: var(--color-fg);
+  }
+
+  #navegacionAncha a:hover {
+    background: var(--color-accent);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(108, 99, 255, 0.4);
+  }
+}
+
+/* ===========================
+   Animaciones de transición
+=========================== */
+@keyframes aparece {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes desvanece {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-1rem); }
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.8s;
+}
+
+::view-transition-old(root) {
+  animation-name: desvanece;
+}
+
+::view-transition-new(root) {
+  animation-name: aparece;
+}
+
+/* ===========================
+   Estilos iniciales
+=========================== */
+@starting-style {
+  @media screen and (max-width: 599px) {
+    #navegacionDelSitio:popover-open {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+  }
+}
+
+@view-transition {
+  navigation: auto;
+}
